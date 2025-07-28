@@ -1,6 +1,6 @@
 const express =require ('express')
 const router=express.Router()
-const {objectId}=require('mongodb')
+const {ObjectId}=require('mongodb')
 const {getDb}=require('../db/connect')
 
 router.get('/',async(req,res)=>{
@@ -20,9 +20,9 @@ router.post('/',async(req,res)=>{
     res.status(201).json({insertedId: result.insertedId});
 })
 
-router.patch('/id',async(req,res)=>{
+router.patch('/:id',async(req,res)=>{
     const result = await getDb().collection('pokemons').deleteOne({_id: new ObjectId(req.params.id)});
     if(result.deletedCount ===0) return res.status(404).json({error:'Not found'});
-    res.json({message:'Deleted !'});
+    res.json({message:'modified !'});
 })
 module.exports = router;
